@@ -1,5 +1,6 @@
 import { storyUrl, topStoriesUrl, userUrl } from "../utils/apiUrls";
 
+// TODO: Extract into separate file maybe
 export interface Story {
   by: string;
   descendants: number;
@@ -19,42 +20,58 @@ export interface User {
   submitted: number[];
 }
 
+interface UsersStories extends Story {
+  userId?: string;
+  userKarma?: number;
+}
+
 export interface Response {
   response: {
-    stories: Story[];
-    users: User[];
+    usersStories: UsersStories[];
   };
 }
 
 // TODO: Can I optimize this a little better? Maybe useCallback() or useMemo()
+// Maybe even I can break this function apart...
+// Better type system maybe
 export async function fetchUsersAndStories() {
   try {
-    // 1.
-    const storiesIds = await fetch(topStoriesUrl).then((res) => res.json());
+    // 1. Fetch the list of unique ids
+    const itemsIds = await fetch(topStoriesUrl).then((res) => res.json());
 
-    // 2.
-    const storiesPromises = storiesIds
+    // 2. Take the first 10 items in array,
+    //    go through each one, and
+    //    call the API for fetching the news item
+    const itemsPromises = itemsIds
       .slice(0, 10)
       .map((id: number): Promise<Story> => fetchStory(id));
 
-    // 3.
-    const stories: Story[] = await Promise.all(storiesPromises);
+    // 3. Since we are getting an array of Promises
+    //    wait for the result of news item
+    const items: Story[] = await Promise.all(itemsPromises);
 
-    // 4.
-    const usersPromises = stories.map((user) => fetchUser(user.by));
+    // 4. Go through the news list,
+    //    and call the users API
+    const usersPromises = items.map((user) => fetchUser(user.by));
 
-    // 5.
+    // 5. Since we are getting an array of Promises
+    //    wait for the result of users
     const users: User[] = await Promise.all(usersPromises);
 
-    // 6.
-    stories.sort((a, b) => a.score - b.score);
+    // 6. In order to prepare single source of truth,
+    //    i.e look for UsersStories, add user id and user karma
+    //    to the Story interface. That means combine everything
+    //    from Story interface and add userId and userKarma
+    const usersStories: UsersStories[] = items.map((story: any, i) => {
+      return { ...story, userId: users[i].id, userKarma: users[i].karma };
+    });
 
-    console.log(users);
+    // 7. We need the ascending order
+    usersStories.sort((a, b) => a.score - b.score);
 
     return {
       response: {
-        stories,
-        users,
+        usersStories,
       },
     };
   } catch (e) {
@@ -62,6 +79,7 @@ export async function fetchUsersAndStories() {
   }
 }
 
+// TODO: Maybe these functions below can become a generic one
 async function fetchStory(id: number) {
   try {
     const response = await fetch(storyUrl(id));

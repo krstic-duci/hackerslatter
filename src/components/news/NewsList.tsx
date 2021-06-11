@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import Row from "react-bootstrap/Row";
 
-// import useRequest from "../../hooks/useRequest";
-// import { topStoriesUrl } from "../../utils/apiUrls";
 import { fetchUsersAndStories, Response } from "../../api";
 
 import NewsItem from "./NewsItem";
@@ -16,7 +15,6 @@ const NewsList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState<Response | undefined>(undefined);
-  // const { data, error, loading } = useRequest(topStoriesUrl);
 
   useEffect(() => {
     setLoading(true);
@@ -46,15 +44,21 @@ const NewsList = () => {
 
   return (
     <main className={`${styles["newsList-wrapper"]} bg-white shadow p-4`}>
-      {data?.response.stories.map((story) => (
-        <NewsItem key={story.id} story={story} />
-      ))}
-      {data?.response.users.map((user) => {
-        if (!user) {
-          return <p key="randomKey">No data</p>;
-        }
-        return <NewsUser key={user.id} karma={user.karma} />;
-      })}
+      <div className="d-flex justify-content-between flex-wrap">
+        {data?.response.usersStories.map((elem) => (
+          <section key={elem.id} className="col-12 p-3 my-3 border-bottom">
+            <Row>
+              <NewsItem
+                title={elem.title}
+                url={elem.url}
+                time={elem.time}
+                score={elem.score}
+              />
+              <NewsUser karma={elem.userKarma} name={elem.userId} />
+            </Row>
+          </section>
+        ))}
+      </div>
     </main>
   );
 };
