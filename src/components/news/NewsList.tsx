@@ -4,12 +4,11 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import Row from "react-bootstrap/Row";
 
-import { fetchUsersAndStories, Response } from "../../api";
+import { fetchUsersAndStories, Response } from "api";
 
 import NewsItem from "./NewsItem";
-import NewsUser from "./NewsUser";
 
-import styles from "../../styles/components/news/newslist.module.scss";
+import styles from "styles/components/news/newslist.module.scss";
 
 const NewsList = () => {
   const [loading, setLoading] = useState(false);
@@ -43,21 +42,24 @@ const NewsList = () => {
   }
 
   return (
-    <main className={`${styles["newsList-wrapper"]} bg-white shadow p-4`}>
+    <main
+      className={`${styles["newsList-wrapper"]} bg-white shadow-xl border p-4`}
+    >
       <div className="d-flex justify-content-between flex-wrap">
-        {data?.response.usersStories.map((elem) => (
-          <section key={elem.id} className="col-12 p-3 my-3 border-bottom">
-            <Row>
-              <NewsItem
-                title={elem.title}
-                url={elem.url}
-                time={elem.time}
-                score={elem.score}
-              />
-              <NewsUser karma={elem.userKarma} name={elem.userId} />
-            </Row>
-          </section>
-        ))}
+        {/* TODO: Better handling maybe here... */}
+        {data?.response ? (
+          data?.response.usersStories.map((elem) => (
+            <section key={elem.id} className="col-12 p-3 my-3 border-bottom">
+              <Row>
+                <NewsItem elem={elem} />
+              </Row>
+            </section>
+          ))
+        ) : (
+          <p className="mx-auto mb-0">
+            No items today, please check again tomorrow...
+          </p>
+        )}
       </div>
     </main>
   );

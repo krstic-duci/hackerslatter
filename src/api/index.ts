@@ -1,6 +1,7 @@
-import { storyUrl, topStoriesUrl, userUrl } from "../utils/apiUrls";
+import { storyUrl, topStoriesUrl, userUrl } from "utils/constants";
 
-// TODO: Extract into separate file maybe
+import type { UsersStories } from "components/news/NewsItem";
+
 export interface Story {
   by: string;
   descendants: number;
@@ -13,16 +14,11 @@ export interface Story {
   url: string;
 }
 
-export interface User {
+interface User {
   created: number;
   id: string;
   karma: number;
   submitted: number[];
-}
-
-interface UsersStories extends Story {
-  userId?: string;
-  userKarma?: number;
 }
 
 export interface Response {
@@ -52,14 +48,16 @@ export async function fetchUsersAndStories() {
 
     // 4. Go through the news list,
     //    and call the users API
-    const usersPromises = items.map((user) => fetchUser(user.by));
+    const usersPromises = items.map(
+      (user): Promise<User> => fetchUser(user.by)
+    );
 
     // 5. Since we are getting an array of Promises
     //    wait for the result of users
     const users: User[] = await Promise.all(usersPromises);
 
     // 6. In order to prepare single source of truth,
-    //    i.e look for UsersStories, add user id and user karma
+    //    i.e look for UsersStories interface, add user id and user karma
     //    to the Story interface. That means combine everything
     //    from Story interface and add userId and userKarma
     const usersStories: UsersStories[] = items.map((story: any, i) => {
@@ -71,11 +69,11 @@ export async function fetchUsersAndStories() {
 
     return {
       response: {
-        usersStories,
-      },
+        usersStories
+      }
     };
   } catch (e) {
-    console.error(`Cannot fetch stories Id ${e}`);
+    console.error(`Cannot fetch user stories :( ${e}`);
   }
 }
 
@@ -86,7 +84,7 @@ async function fetchStory(id: number) {
     const result = response.json();
     return result;
   } catch (e) {
-    console.error(`Cannot fetch story ${e}`);
+    console.error(`Cannot fetch a story ${e}`);
   }
 }
 

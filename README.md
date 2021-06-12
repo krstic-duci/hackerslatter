@@ -7,8 +7,7 @@
 - I could also use a classname package for a "nicer" way of writing className
 - I decide to put all files into components, but they could be easily separate via purpose (for example)
   ```
-  src/News/NewsStory
+  src/News/[name]
   ```
-- I could also improve paths to certain folders i.e `../../styles` to become `@styles`
 - In the `api/index.ts` there could be definitely some better error handling
-- In the real world project I would probably use some third-party lib for auto generating *Request* and *Response* from back-end
+- In the real world project I would probably use some third-party lib [restful-react](https://github.com/contiamo/restful-react) for auto generating *Request* and *Response* from back-end

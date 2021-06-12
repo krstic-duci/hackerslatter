@@ -1,7 +1,7 @@
 @use "./_colors";
 
 a {
-  transition: color .2s ease-in;
+  transition: color 0.2s ease-in;
   color: $orange-600;
   &:hover {
     color: $orange-700;
@@ -11,6 +11,10 @@ a {
 
 @media screen and (max-width: 768px) {
   a {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
+}
+
+.shadow-xl {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
 }
