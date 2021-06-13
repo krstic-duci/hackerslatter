@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header snapshot test should match snapshot 1`] = `
+<header
+  className="header-wrapper text-center"
+>
+  <h1
+    className="text-monospace text-white font-weight-bold"
+  >
+    Hackerslatter
+  </h1>
+</header>
+`;

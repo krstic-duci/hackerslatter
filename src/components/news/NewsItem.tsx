@@ -1,6 +1,7 @@
 import React, { VFC } from "react";
 
 import Col from "react-bootstrap/Col";
+import { format } from "date-fns";
 
 import type { Story } from "api";
 
@@ -11,10 +12,10 @@ import LazyImage from "common/LazyImage";
 
 export interface UsersStories extends Story {
   userId: string;
-  userKarma: number;
+  userKarma?: number | undefined;
 }
 
-interface NewsStoryProps {
+export interface NewsStoryProps {
   elem: UsersStories;
 }
 
@@ -36,7 +37,8 @@ const NewsStory: VFC<NewsStoryProps> = ({
             <p className="d-flex flex-wrap">
               {/* TODO: check the time, something is fishy here */}
               <span className="font-italic text-muted mr-2">
-                created at: {new Date(time).toLocaleTimeString()}
+                created at:{" "}
+                {format(new Date(time), "MMM do yyyy - HH:mm:ss aaa")}
               </span>
 
               {/* User name */}
@@ -60,7 +62,12 @@ const NewsStory: VFC<NewsStoryProps> = ({
         </div>
 
         {url && (
-          <a href={url} target="_blank" rel="noreferrer noopener">
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer noopener"
+            data-testid="urlLink"
+          >
             Check the story &gt;
           </a>
         )}

@@ -14,7 +14,7 @@ interface State {
 
 class ErrorBoundary extends Component<Props, State> {
   state: State = {
-    hasError: false,
+    hasError: false
   };
 
   static getDerivedStateFromError(_: Error): State {
@@ -22,7 +22,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    // In here we could load an error to Sentry or similar
+    // analytics
   }
 
   render() {
@@ -32,7 +33,7 @@ class ErrorBoundary extends Component<Props, State> {
           <Row>
             <Col>
               <div className="text-center mt-5">
-                <h2>We are sorry...</h2>
+                <h2 data-testid="errorHeading">We are sorry...</h2>
                 <p>
                   Something unexpected happen, and it's on us. We are working
                   hard to restore it...

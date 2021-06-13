@@ -35,7 +35,7 @@ const NewsList = () => {
 
   if (error) {
     return (
-      <Alert variant="danger" className="mt-4">
+      <Alert variant="danger" className="mt-4" role="alert">
         Something went wrong, please try again later...
       </Alert>
     );
@@ -49,7 +49,11 @@ const NewsList = () => {
         {/* TODO: Better handling maybe here... */}
         {data?.response ? (
           data?.response.usersStories.map((elem) => (
-            <section key={elem.id} className="col-12 p-3 my-3 border-bottom">
+            <section
+              key={elem.id}
+              className="col-12 p-3 my-3 border-bottom"
+              data-testid="items"
+            >
               <Row>
                 <NewsItem elem={elem} />
               </Row>
