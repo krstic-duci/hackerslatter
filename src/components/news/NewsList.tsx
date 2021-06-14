@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, VFC } from "react";
 
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
@@ -10,7 +10,7 @@ import NewsItem from "./NewsItem";
 
 import styles from "styles/components/news/newslist.module.scss";
 
-const NewsList = () => {
+const NewsList: VFC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState<Response | undefined>(undefined);
@@ -43,12 +43,11 @@ const NewsList = () => {
 
   return (
     <main
-      className={`${styles["newsList-wrapper"]} bg-white shadow-xl border p-4`}
+      className={`${styles["newsList-wrapper"]} bg-white shadow-xl border p-lg-4 p-3`}
     >
       <div className="d-flex justify-content-between flex-wrap">
-        {/* TODO: Better handling maybe here... */}
-        {data?.response ? (
-          data?.response.usersStories.map((elem) => (
+        {data?.response?.newsStories?.length ? (
+          data.response.newsStories.map((elem) => (
             <section
               key={elem.id}
               className="col-12 p-3 my-3 border-bottom"
@@ -60,7 +59,7 @@ const NewsList = () => {
             </section>
           ))
         ) : (
-          <p className="mx-auto mb-0">
+          <p className="mx-auto mb-0" data-testid="noItems">
             No items today, please check again tomorrow...
           </p>
         )}

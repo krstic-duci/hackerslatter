@@ -1,7 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import NewsItem, { NewsStoryProps } from "../NewsItem";
 import "@testing-library/jest-dom/extend-expect";
+
+import NewsItem, { NewsStoryProps } from "../NewsItem";
 
 describe("News item component", () => {
   const dummyElem: NewsStoryProps = {

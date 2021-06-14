@@ -1,22 +1,22 @@
-import React, { VFC } from "react";
+import { VFC } from "react";
 
 import Col from "react-bootstrap/Col";
 import { format } from "date-fns";
 
-import type { Story } from "api";
+import type { News } from "api";
 
 import karmaIcon from "images/karma-icon.svg";
 import newsImg from "images/news.png";
 
 import LazyImage from "common/LazyImage";
 
-export interface UsersStories extends Story {
+export interface NewsStories extends News {
   userId: string;
   userKarma?: number | undefined;
 }
 
 export interface NewsStoryProps {
-  elem: UsersStories;
+  elem: NewsStories;
 }
 
 const NewsStory: VFC<NewsStoryProps> = ({
@@ -35,10 +35,10 @@ const NewsStory: VFC<NewsStoryProps> = ({
             <p className="mb-1 h5">{title}</p>
 
             <p className="d-flex flex-wrap">
-              {/* TODO: check the time, something is fishy here */}
               <span className="font-italic text-muted mr-2">
                 created at:{" "}
-                {format(new Date(time), "MMM do yyyy - HH:mm:ss aaa")}
+                {/* HN api returns seconds so that's why we have to multiply by 1000 */}
+                {format(new Date(time * 1000), "MMM do yyyy - h:mm aaa")}
               </span>
 
               {/* User name */}

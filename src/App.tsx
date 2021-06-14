@@ -1,5 +1,3 @@
-import React from "react";
-
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,15 +9,13 @@ import NewsList from "components/news";
 const App = () => {
   return (
     <>
-      <div className="bg-orange">
-        <Container fluid>
-          <Row>
-            <Col>
-              <Header />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <Container fluid className="bg-orange">
+        <Row>
+          <Col>
+            <Header />
+          </Col>
+        </Row>
+      </Container>
 
       <Container className="negative-mt">
         <Row>
