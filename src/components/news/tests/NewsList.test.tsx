@@ -2,8 +2,9 @@ import { render, screen, act, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import "@testing-library/jest-dom/extend-expect";
 
-import NewsList from "../NewsList";
 import { News, User } from "api";
+
+import NewsList from "../NewsList";
 
 describe("News List component", () => {
   beforeEach(() => {
