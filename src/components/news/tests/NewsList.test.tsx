@@ -2,9 +2,8 @@ import { render, screen, act, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import "@testing-library/jest-dom/extend-expect";
 
-import { News, User } from "api";
-
 import NewsList from "../NewsList";
+import type { News, User } from "../News.types";
 
 describe("News List component", () => {
   beforeEach(() => {
@@ -27,8 +26,8 @@ describe("News List component", () => {
     const testItemsIds: number[] = [1, 2];
     const testItems1: News = {
       by: "testUser1",
-      descendants: 1,
-      id: 123,
+      descendants: 11,
+      id: 1,
       kids: [1, 2],
       score: 43,
       time: 1623693620,
@@ -38,8 +37,8 @@ describe("News List component", () => {
     };
     const testItems2: News = {
       by: "testUser2",
-      descendants: 2,
-      id: 456,
+      descendants: 22,
+      id: 2,
       kids: [3, 4],
       score: 69,
       time: 1623698713,

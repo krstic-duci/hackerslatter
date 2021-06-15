@@ -1,4 +1,4 @@
-import { useEffect, useState, VFC } from "react";
+import { useEffect, useState } from "react";
 
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
@@ -10,7 +10,7 @@ import NewsItem from "./NewsItem";
 
 import styles from "styles/components/news/newslist.module.scss";
 
-const NewsList: VFC = () => {
+const NewsList = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState<Response | undefined>(undefined);
@@ -43,7 +43,7 @@ const NewsList: VFC = () => {
 
   return (
     <main
-      className={`${styles["newsList-wrapper"]} bg-white shadow-xl border p-lg-4 p-3`}
+      className={`${styles["newsList-wrapper"]} bg-white shadow-xl border p-lg-4`}
     >
       <div className="d-flex justify-content-between flex-wrap">
         {data?.response?.newsStories?.length ? (

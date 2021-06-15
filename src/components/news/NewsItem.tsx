@@ -3,17 +3,12 @@ import { VFC } from "react";
 import Col from "react-bootstrap/Col";
 import { format } from "date-fns";
 
-import type { News } from "api";
+import LazyImage from "common/LazyImage";
+
+import type { NewsStories } from "./News.types";
 
 import karmaIcon from "images/karma-icon.svg";
 import newsImg from "images/news.png";
-
-import LazyImage from "common/LazyImage";
-
-export interface NewsStories extends News {
-  userId: string;
-  userKarma?: number | undefined;
-}
 
 export interface NewsStoryProps {
   elem: NewsStories;

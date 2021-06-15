@@ -1,25 +1,6 @@
 import { itemUrl, topStoriesUrl, userUrl } from "utils/constants";
 
-import type { NewsStories } from "components/news/NewsItem";
-
-export interface News {
-  by: string;
-  descendants: number;
-  id: number;
-  kids: number[];
-  score: number;
-  time: number;
-  title: string;
-  type: string;
-  url: string;
-}
-
-export interface User {
-  created: number;
-  id: string;
-  karma: number;
-  submitted: number[];
-}
+import type { News, NewsStories, User } from "components/news/News.types";
 
 export interface Response {
   response: {

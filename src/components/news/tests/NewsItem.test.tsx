@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
@@ -12,7 +11,7 @@ describe("News item component", () => {
       id: 123,
       kids: [1, 2],
       score: 12,
-      time: 12345,
+      time: 1623693620,
       title: "testTitle",
       type: "testType",
       url: "",
